@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "695455391552",
-    "firebase_url": "https://navigationforblind-95cc3.firebaseio.com",
-    "project_id": "navigationforblind-95cc3",
-    "storage_bucket": "navigationforblind-95cc3.appspot.com"
+    "project_number": "932406530196",
+    "firebase_url": "https://navigationforblind-bdc75.firebaseio.com",
+    "project_id": "navigationforblind-bdc75",
+    "storage_bucket": "navigationforblind-bdc75.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:695455391552:android:31a331f8c8abc92b",
+        "mobilesdk_app_id": "1:932406530196:android:31a331f8c8abc92b",
         "android_client_info": {
           "package_name": "com.example.dazze.navigationforblind"
         }
       },
       "oauth_client": [
         {
-          "client_id": "695455391552-6tmskfl8jff465deonh4a7lm9veih88u.apps.googleusercontent.com",
+          "client_id": "932406530196-6talda39paubm6fp6uh87llhh051mffh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.dazze.navigationforblind",
@@ -23,13 +23,13 @@
           }
         },
         {
-          "client_id": "695455391552-ou5hk8nt65q5fq2ouvq3tnfdqglnqaan.apps.googleusercontent.com",
+          "client_id": "932406530196-6u1gvvcr1tmdteu3uk3uo6p1iqkfuq96.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAchQU32guOTzHycKAQCpOXwkbTJgEvbQc"
+          "current_key": "AIzaSyAXnIFGcA66DdEtiKabdClDvPWrvgz6Xig"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "695455391552-ou5hk8nt65q5fq2ouvq3tnfdqglnqaan.apps.googleusercontent.com",
+              "client_id": "932406530196-6u1gvvcr1tmdteu3uk3uo6p1iqkfuq96.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
