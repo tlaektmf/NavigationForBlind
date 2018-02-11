@@ -8,10 +8,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnPJoin;//보호자 회원가입
-    private Button btnPLogin;//보호자 로그인
-    private Button btnUJoin;
-    private Button btnULogin;
+    private Button btnGoPJoin;//보호자 회원가입
+    private Button btnGoPLogin;//보호자 로그인
+    private Button btnGoUJoin;
+    private Button btnGoULogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
         2. 보호자 로그인
          */
 
-        btnPJoin=(Button)findViewById(R.id.PJoin);
-        btnPLogin=(Button)findViewById(R.id.PLogin);
+        btnGoPJoin=(Button)findViewById(R.id.goPJoin);
+        btnGoPLogin=(Button)findViewById(R.id.goPLogin);
 
 
         //
 
-        btnPLogin.setOnClickListener(new View.OnClickListener() {
+        btnGoPLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //데이터 확인
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnPJoin.setOnClickListener(new View.OnClickListener() {
+        btnGoPJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //데이터 확인

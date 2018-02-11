@@ -8,13 +8,13 @@
     tools:context="com.example.dazze.navigationforblind.MainActivity">
 
    <Button
-       android:id="@+id/PLogin"
+       android:id="@+id/goPLogin"
        android:text="보호자 로그인"
        android:layout_width="match_parent"
        android:layout_height="match_parent" />
 
     <Button
-        android:id="@+id/PJoin"
+        android:id="@+id/goPJoin"
         android:text="보호자 회원가입"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
