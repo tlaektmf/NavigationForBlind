@@ -90,23 +90,23 @@ public class NPJoinActivity extends AppCompatActivity {
                             //realtime database : 실시간으로 firebase에 데이터를 등록
                             database=FirebaseDatabase.getInstance();
                             NUserInfo minfo=new NUserInfo();
-                            minfo.userEmail=mAuth.getCurrentUser().getEmail().toString();
-                            minfo.pphonNum=editPphone.getText().toString();
+                            minfo.m_userEmail=mAuth.getCurrentUser().getEmail().toString();
+                            minfo.m_pphonNum=editPphone.getText().toString();
 
                             //랜덤으로 초대번호 생성
                             String tmp="";
                             for(int i=mAuth.getUid().length()-1;i>=0;i--){
                                 tmp+=mAuth.getUid().toString().charAt(i);
                             }
-                            minfo.inviteCode=tmp;
+                            minfo.m_inviteCode=tmp;
 
                             //데이터 등록
-                            database.getReference().child("userInfo").child(minfo.pphonNum).setValue(minfo);
+                            database.getReference().child("userInfo").child(minfo.m_pphonNum.toString()).setValue(minfo);
 
                             //보호자-사용자 연동 화면으로 전환
                             Intent intent=new Intent(NPJoinActivity.this, NConnectActivity.class);
-                            intent.putExtra("inviteCode",minfo.inviteCode);
-                            intent.putExtra("pphoneNum",minfo.pphonNum);
+                            intent.putExtra("inviteCode",minfo.m_inviteCode);
+                            intent.putExtra("pphoneNum",minfo.m_pphonNum);
                             startActivity(intent);
 
                         }

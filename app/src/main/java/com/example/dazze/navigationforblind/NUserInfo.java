@@ -6,10 +6,10 @@ package com.example.dazze.navigationforblind;
  */
 
 public class NUserInfo {
-    public String userEmail;
-    public String pphonNum;
-    public String uphoneNum;
-    public String inviteCode;
+    public String m_userEmail;
+    public String m_pphonNum;
+    public String m_uphoneNum;
+    public String m_inviteCode;
 
     NUserInfo(){
 
