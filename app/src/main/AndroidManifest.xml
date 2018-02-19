@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dazze.navigationforblind">
 
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,16 +21,15 @@
         </activity>
         <activity android:name=".NPJoinActivity" />
         <activity android:name=".NPLoginActivity" />
-        <activity android:name=".NUJoinActivity"></activity>
+        <activity android:name=".NUJoinActivity" />
 
         <receiver android:name=".SmsReceiver">
             <intent-filter android:priority="1000">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-    </application>
 
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+        <activity android:name=".NConnectActivity"></activity>
+    </application>
 
 </manifest>

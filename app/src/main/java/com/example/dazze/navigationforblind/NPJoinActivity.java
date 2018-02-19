@@ -1,5 +1,6 @@
 package com.example.dazze.navigationforblind;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.nio.channels.NoConnectionPendingException;
 
 public class NPJoinActivity extends AppCompatActivity {
 
@@ -90,6 +93,7 @@ public class NPJoinActivity extends AppCompatActivity {
                             minfo.userEmail=mAuth.getCurrentUser().getEmail().toString();
                             minfo.pphonNum=editPphone.getText().toString();
 
+                            //랜덤으로 초대번호 생성
                             String tmp="";
                             for(int i=mAuth.getUid().length()-1;i>=0;i--){
                                 tmp+=mAuth.getUid().toString().charAt(i);
@@ -97,7 +101,13 @@ public class NPJoinActivity extends AppCompatActivity {
                             minfo.inviteCode=tmp;
 
                             //데이터 등록
-                            database.getReference().child("userInfo").push().setValue(minfo);
+                            database.getReference().child("userInfo").child(minfo.pphonNum).setValue(minfo);
+
+                            //보호자-사용자 연동 화면으로 전환
+                            Intent intent=new Intent(NPJoinActivity.this, NConnectActivity.class);
+                            intent.putExtra("inviteCode",minfo.inviteCode);
+                            intent.putExtra("pphoneNum",minfo.pphonNum);
+                            startActivity(intent);
 
                         }
 
