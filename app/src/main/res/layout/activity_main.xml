@@ -5,25 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dazze.navigationforblind.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.dazze.navigationforblind.MainActivity">
 
-   <Button
-       android:id="@+id/goPLogin"
-       android:text="보호자 로그인"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/goPLogin"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:text="보호자 로그인" />
 
     <Button
         android:id="@+id/goPJoin"
-        android:text="보호자 회원가입"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/goUJoin"
-        android:text="사용자 회원가입"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보호자 회원가입" />
 
 </LinearLayout>

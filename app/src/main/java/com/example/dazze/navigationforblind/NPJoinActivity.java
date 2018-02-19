@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class NPJoinActivity extends AppCompatActivity {
 
@@ -22,6 +23,10 @@ public class NPJoinActivity extends AppCompatActivity {
     private EditText editJoinPW;
     private EditText editPphone;
     private Button btnJoin;
+
+    //realtime database
+    private FirebaseDatabase database;//데이터 베이스 추가
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +65,40 @@ public class NPJoinActivity extends AppCompatActivity {
 //                            updateUI(user);
 
 
-                        } else {
+                        } else {//회원가입이 성공했을 경우
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
 //                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
 //                                    Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
                             Toast.makeText(NPJoinActivity.this,"회원가입 성공",Toast.LENGTH_SHORT).show();
-                            finish();
+                           // finish();//홈으로 이동
+
+                            /*
+                            회원가입이 성공했을 경우
+                            - 사용자의 이메일 주소
+                            - 사용자의 핸드폰 번호
+                            - 랜덤생성된 초대번호를 등록하고
+
+                            보호자-사용자 연동화면으로 전환
+                             */
+
+
+                            //realtime database : 실시간으로 firebase에 데이터를 등록
+                            database=FirebaseDatabase.getInstance();
+                            NUserInfo minfo=new NUserInfo();
+                            minfo.userEmail=mAuth.getCurrentUser().getEmail().toString();
+                            minfo.pphonNum=editPphone.getText().toString();
+
+                            String tmp="";
+                            for(int i=mAuth.getUid().length()-1;i>=0;i--){
+                                tmp+=mAuth.getUid().toString().charAt(i);
+                            }
+                            minfo.inviteCode=tmp;
+
+                            //데이터 등록
+                            database.getReference().child("userInfo").push().setValue(minfo);
+
                         }
 
                         // ...
