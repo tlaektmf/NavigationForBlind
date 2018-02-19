@@ -10,8 +10,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnGoPJoin;//보호자 회원가입
     private Button btnGoPLogin;//보호자 로그인
-    private Button btnGoUJoin;
-    private Button btnGoULogin;
+    private Button btnGoUJoin;//사용자 회원가입
+    private Button btnGoULogin;//사용자 로그인
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
         /*
         1. 보호자 회원가입
         2. 보호자 로그인
+        3. 사용자 회원가입
          */
 
         btnGoPJoin=(Button)findViewById(R.id.goPJoin);
         btnGoPLogin=(Button)findViewById(R.id.goPLogin);
-
+        btnGoUJoin=(Button)findViewById(R.id.goUJoin);
 
         //
 
@@ -49,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        btnGoUJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), NUJoinActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
