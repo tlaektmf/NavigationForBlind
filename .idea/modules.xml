@@ -3,15 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NavigationForBlind.iml" filepath="$PROJECT_DIR$/NavigationForBlind.iml" />
-<<<<<<< HEAD
-      <module fileurl="file://C:\Users\Bibimbab\Documents\NavigationForBlind\NavigationForBlind.iml" filepath="C:\Users\Bibimbab\Documents\NavigationForBlind\NavigationForBlind.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Bibimbab\Documents\NavigationForBlind\app\app.iml" filepath="C:\Users\Bibimbab\Documents\NavigationForBlind\app\app.iml" />
-=======
-      <module fileurl="file://C:\Users\daseul\Documents\GitHub\NavigationForBlind\NavigationForBlind.iml" filepath="C:\Users\daseul\Documents\GitHub\NavigationForBlind\NavigationForBlind.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\daseul\Documents\GitHub\NavigationForBlind\app\app.iml" filepath="C:\Users\daseul\Documents\GitHub\NavigationForBlind\app\app.iml" />
->>>>>>> b6dc6731ece6338e4d93ff0facf4a3727218ea31
     </modules>
   </component>
 </project>

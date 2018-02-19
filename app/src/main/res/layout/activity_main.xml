@@ -10,15 +10,20 @@
 
     <Button
         android:id="@+id/goPLogin"
-        android:layout_width="115dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="보호자 로그인" />
 
     <Button
         android:id="@+id/goPJoin"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="보호자 회원가입" />
 
+    <Button
+        android:id="@+id/goUJoin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사용자 회원가입" />
 
 </LinearLayout>
