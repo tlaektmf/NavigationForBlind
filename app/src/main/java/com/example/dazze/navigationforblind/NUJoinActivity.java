@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class NUJoinActivity extends AppCompatActivity {
 
@@ -24,7 +26,12 @@ public class NUJoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nujoin);
 
         checkSmsPermission();
-        readSmsMessage();
+
+        try {
+            readSmsMessage();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void checkSmsPermission(){
@@ -49,7 +56,32 @@ public class NUJoinActivity extends AppCompatActivity {
         }
     }
 
-    public void readSmsMessage(){
+    public boolean checkSmsDate(long date) throws ParseException { // 날짜가 같다면 return true
+        long now = System.currentTimeMillis();
+
+        Date currentDate; // 현재 날짜 Date
+        String currentDateStr; // 현재 날짜 String
+        Date smsDate; // 수신 날짜 Date
+        String smsDateStr; // 수신 날짜 String
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentTime = new Date(now);
+        currentDateStr = simpleDateFormat.format(currentTime);
+        Date smsTime = new Date(date);
+        smsDateStr = simpleDateFormat.format(smsTime);
+
+        currentDate = simpleDateFormat.parse(currentDateStr);
+        smsDate = simpleDateFormat.parse(smsDateStr);
+
+        int compare = currentDate.compareTo(smsDate);
+
+        if(compare == 0)
+            return true; // 날짜가 같다면 true
+        else
+            return false;
+    }
+
+    public void readSmsMessage() throws ParseException {
         Uri allMessage = Uri.parse("content://sms");
         ContentResolver cr = getContentResolver();
         Cursor cursor = cr.query(allMessage,
@@ -64,20 +96,19 @@ public class NUJoinActivity extends AppCompatActivity {
         StringBuilder result = new StringBuilder();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd HH:mm");
 
-        int count = 0;
         while(cursor.moveToNext()){
             String sender = cursor.getString(idxSender);
             long date = cursor.getLong(idxDate);
             String sdate = formatter.format(new Date(date));
             String body = cursor.getString(idxBody);
 
-            result.append(sdate + ": \n");
-            result.append(sender + "");
-            result.append(body + "\n");
-
-            if(count++ == 100){
-                break;
+            if(checkSmsDate(date)){
+                result.append(sdate + ": \n");
+                result.append(sender + "");
+                result.append(body + "\n");
             }
+            else
+                break;
         }
         cursor.close();
 
