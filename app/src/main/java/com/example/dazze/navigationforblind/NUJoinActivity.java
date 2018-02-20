@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +22,18 @@ public class NUJoinActivity extends AppCompatActivity {
 
     static final int SMS_RECEIVE_PERMISSON = 1;
 
+    String authCode = "";
+
+    EditText edtInsertCode;
+    Button btnInsertCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nujoin);
+
+        edtInsertCode = findViewById(R.id.edtInsertCode);
+        btnInsertCode = findViewById(R.id.btnInsertCode);
 
         checkSmsPermission();
 
@@ -81,6 +91,28 @@ public class NUJoinActivity extends AppCompatActivity {
             return false;
     }
 
+    public boolean readSmsCode(String smsBody){    // 인증번호를 찾으면 return true
+        int pt_start = -1;
+        int pt_end = -1;
+        String code_start = "인증번호[";
+        String code_end = "]";
+
+        pt_start = smsBody.indexOf(code_start);
+        if(pt_start != -1){
+            pt_end = smsBody.indexOf(code_end);
+            if(pt_end != -1){
+                authCode = smsBody.substring(pt_start + code_start.length(), pt_end);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
     public void readSmsMessage() throws ParseException {
         Uri allMessage = Uri.parse("content://sms");
         ContentResolver cr = getContentResolver();
@@ -102,18 +134,18 @@ public class NUJoinActivity extends AppCompatActivity {
             String sdate = formatter.format(new Date(date));
             String body = cursor.getString(idxBody);
 
-            if(checkSmsDate(date)){
-                result.append(sdate + ": \n");
-                result.append(sender + "");
-                result.append(body + "\n");
-            }
-            else
+            if(checkSmsDate(date) && readSmsCode(body)){
+//                result.append(sdate + ": \n");
+//                result.append(sender + "");
+//                result.append(body + "\n");
+                edtInsertCode.setText(authCode);
                 break;
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "파싱 결과 없음", Toast.LENGTH_SHORT).show();
+            }
         }
         cursor.close();
-
-        TextView txtResult = (TextView)findViewById(R.id.SMS);
-        txtResult.setText(result);
     }
 
     public class Message{
