@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +23,8 @@ public class NUJoinActivity extends AppCompatActivity {
 
     static final int SMS_RECEIVE_PERMISSON = 1;
 
-    String authCode = "";
+    String authCodeR = ""; // SMS로 수신받은 초대코드
+    String authCodeP = "1234"; // 보호자 초대코드
 
     EditText edtInsertCode;
     Button btnInsertCode;
@@ -34,6 +36,13 @@ public class NUJoinActivity extends AppCompatActivity {
 
         edtInsertCode = findViewById(R.id.edtInsertCode);
         btnInsertCode = findViewById(R.id.btnInsertCode);
+
+        btnInsertCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkSmsCode();
+            }
+        });
 
         checkSmsPermission();
 
@@ -101,7 +110,7 @@ public class NUJoinActivity extends AppCompatActivity {
         if(pt_start != -1){
             pt_end = smsBody.indexOf(code_end);
             if(pt_end != -1){
-                authCode = smsBody.substring(pt_start + code_start.length(), pt_end);
+                authCodeR = smsBody.substring(pt_start + code_start.length(), pt_end);
                 return true;
             }
             else{
@@ -110,6 +119,15 @@ public class NUJoinActivity extends AppCompatActivity {
         }
         else{
             return false;
+        }
+    }
+
+    public void checkSmsCode(){
+        if(edtInsertCode.getText().toString().compareTo(authCodeP) == 0){
+            Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "없는 초대번호 입니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,7 +156,7 @@ public class NUJoinActivity extends AppCompatActivity {
 //                result.append(sdate + ": \n");
 //                result.append(sender + "");
 //                result.append(body + "\n");
-                edtInsertCode.setText(authCode);
+                edtInsertCode.setText(authCodeR);
                 break;
             }
             else{
