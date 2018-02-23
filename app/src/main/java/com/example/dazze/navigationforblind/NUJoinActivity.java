@@ -8,34 +8,66 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class NUJoinActivity extends AppCompatActivity {
 
     static final int SMS_RECEIVE_PERMISSON = 1;
 
+    String senderAdd = ""; // 발신자의 연락처
     String authCodeR = ""; // SMS로 수신받은 초대코드
-    String authCodeP = "1234"; // 보호자 초대코드
+    String authCodeP = ""; // 보호자 초대코드
 
     EditText edtInsertCode;
     Button btnInsertCode;
+
+//    ListView listView;
+//    List idList = new ArrayList<>();
+//    ArrayAdapter adapter;
+    static boolean calledAlready = false;
+
+    FirebaseDatabase database;
+    DatabaseReference databaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nujoin);
+        if(!calledAlready){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
 
         edtInsertCode = findViewById(R.id.edtInsertCode);
         btnInsertCode = findViewById(R.id.btnInsertCode);
+
+//        listView = findViewById(R.id.lvIdList);
+//
+//        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+//        listView.setAdapter(adapter);
+
+        database = FirebaseDatabase.getInstance();
+        databaseRef = database.getReference("userInfo");
 
         btnInsertCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +135,7 @@ public class NUJoinActivity extends AppCompatActivity {
     public boolean readSmsCode(String smsBody){    // 인증번호를 찾으면 return true
         int pt_start = -1;
         int pt_end = -1;
-        String code_start = "인증번호[";
+        String code_start = "[";
         String code_end = "]";
 
         pt_start = smsBody.indexOf(code_start);
@@ -123,7 +155,7 @@ public class NUJoinActivity extends AppCompatActivity {
     }
 
     public void checkSmsCode(){
-        if(edtInsertCode.getText().toString().compareTo(authCodeP) == 0){
+        if(authCodeR.equals(authCodeP)){
             Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -139,23 +171,30 @@ public class NUJoinActivity extends AppCompatActivity {
                 null, null,
                 "date DESC");
 
-        int idxSender = cursor.getColumnIndex("address");
         int idxDate = cursor.getColumnIndex("date");
         int idxBody = cursor.getColumnIndex("body");
-
-        StringBuilder result = new StringBuilder();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd HH:mm");
+        int idxAddress = cursor.getColumnIndex("address");
 
         while(cursor.moveToNext()){
-            String sender = cursor.getString(idxSender);
             long date = cursor.getLong(idxDate);
-            String sdate = formatter.format(new Date(date));
             String body = cursor.getString(idxBody);
+            String address = cursor.getString(idxAddress);
 
             if(checkSmsDate(date) && readSmsCode(body)){
-//                result.append(sdate + ": \n");
-//                result.append(sender + "");
-//                result.append(body + "\n");
+                senderAdd = address;
+
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        authCodeP = dataSnapshot.child(senderAdd).child("m_inviteCode").getValue(String.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("TAG: ", "Failed to read value", databaseError.toException());
+                    }
+                });
+
                 edtInsertCode.setText(authCodeR);
                 break;
             }
@@ -164,38 +203,5 @@ public class NUJoinActivity extends AppCompatActivity {
             }
         }
         cursor.close();
-    }
-
-    public class Message{
-        String msgBody; // 문자내용
-        String msgDate; // 시간
-        String msgSender; // 발신자 번호
-
-        public Message() {
-        }
-
-        public String getMsgBody() {
-            return msgBody;
-        }
-
-        public void setMsgBody(String msgBody) {
-            this.msgBody = msgBody;
-        }
-
-        public String getMsgDate() {
-            return msgDate;
-        }
-
-        public void setMsgDate(String msgDate) {
-            this.msgDate = msgDate;
-        }
-
-        public String getMsgSender() {
-            return msgSender;
-        }
-
-        public void setMsgSender(String msgSender) {
-            this.msgSender = msgSender;
-        }
     }
 }

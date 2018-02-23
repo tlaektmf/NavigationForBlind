@@ -31,12 +31,6 @@
         <activity android:name=".NPLoginActivity" />
         <activity android:name=".NUJoinActivity" />
 
-        <receiver android:name=".SmsReceiver">
-            <intent-filter android:priority="1000">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-
         <activity android:name=".NConnectActivity"></activity>
     </application>
 
