@@ -22,6 +22,7 @@ public class NConnectActivity extends AppCompatActivity {
     private EditText editUphone;
     private Button btnSendMessage;
     final SmsManager sms = SmsManager.getDefault();
+//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
