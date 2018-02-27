@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -157,6 +158,48 @@ public class NUJoinActivity extends AppCompatActivity {
     public void checkSmsCode(){
         if(authCodeR.equals(authCodeP)){
             Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
+
+            /*
+            인증 완료시
+            1. 노드 생성
+            2. userInfo부분에 사용자의 핸드폰번호 추가
+             */
+            //데이터 등록
+            databaseRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    //원래 코드! (밑에는 test용)
+//                    NUserInfo minfo=new NUserInfo();
+//                    minfo = dataSnapshot.child(senderAdd).getValue(NUserInfo.class);
+//                    minfo.m_uphoneNum="(사용자번호)";//수정필요
+//                    database.getReference().child("userInfo").child(senderAdd).setValue(minfo);
+
+                    //test 용
+                    NUserInfo minfo=new NUserInfo();
+                    minfo = dataSnapshot.child("010").getValue(NUserInfo.class);
+                    minfo.m_uphoneNum="(사용자번호)";//수정필요
+                    database.getReference().child("userInfo").child("010").setValue(minfo);
+
+
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.w("TAG: ", "Failed to read value", databaseError.toException());
+                }
+            });
+
+            //노드 생성
+            // firebase에 데이터를 등록
+           // NUserInfo minfo=new NUserInfo();
+           // minfo.m_userEmail=mAuth.getCurrentUser().getEmail().toString();
+           // minfo.m_pphonNum=editPphone.getText().toString();
+
+
+
         }
         else{
             Toast.makeText(getApplicationContext(), "없는 초대번호 입니다.", Toast.LENGTH_SHORT).show();
