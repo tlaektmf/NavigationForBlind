@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,12 +57,15 @@ public class NPJoinActivity extends AppCompatActivity {
     /**
      * 회원가입 : 비밀번호와 이메일로 회원 등록해주는 함수
      */
-    private void createUser(String email, String password){
+    private void createUser(String email, final String password){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (!task.isSuccessful()) {
+                            Log.i("다슬로그",editJoinID+" "+editJoinPW);
 //                            // Sign in success, update UI with the signed-in user's information
 //                            Log.d(TAG, "createUserWithEmail:success");
 //                            FirebaseUser user = mAuth.getCurrentUser();
@@ -74,6 +78,7 @@ public class NPJoinActivity extends AppCompatActivity {
 //                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
 //                                    Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
+
                             Toast.makeText(NPJoinActivity.this,"회원가입 성공",Toast.LENGTH_SHORT).show();
                            // finish();//홈으로 이동
 

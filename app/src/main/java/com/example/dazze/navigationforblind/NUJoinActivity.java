@@ -32,7 +32,7 @@ import java.util.Locale;
 
 public class NUJoinActivity extends AppCompatActivity {
 
-    static final int SMS_RECEIVE_PERMISSON = 1;
+    static final int SMS_RECEIVE_PERMISSION = 1;
 
     String senderAdd = ""; // 발신자의 연락처
     String authCodeR = ""; // SMS로 수신받은 초대코드
@@ -100,9 +100,9 @@ public class NUJoinActivity extends AppCompatActivity {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_SMS)){
                 //이곳에 권한이 왜 필요한지 설명하는 Toast나 dialog를 띄워준 후, 다시 권한을 요청한다.
                 Toast.makeText(getApplicationContext(), "SMS권한이 필요합니다", Toast.LENGTH_SHORT).show();
-                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSON);
+                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
             }else{
-                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSON);
+                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
             }
         }
     }
