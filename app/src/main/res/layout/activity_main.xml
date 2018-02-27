@@ -26,4 +26,10 @@
         android:layout_height="wrap_content"
         android:text="사용자 회원가입" />
 
+    <Button
+        android:id="@+id/goMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="맵 보이기" />
+
 </LinearLayout>

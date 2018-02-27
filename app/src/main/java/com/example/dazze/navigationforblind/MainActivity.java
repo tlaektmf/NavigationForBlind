@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnGoPLogin;//보호자 로그인
     private Button btnGoUJoin;//사용자 회원가입
     private Button btnGoULogin;//사용자 로그인
+    private Button btnGoMapView;//맵뷰 보이기
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
         1. 보호자 회원가입
         2. 보호자 로그인
         3. 사용자 회원가입
+        4. mapview 보이기
          */
 
         btnGoPJoin=(Button)findViewById(R.id.goPJoin);
         btnGoPLogin=(Button)findViewById(R.id.goPLogin);
         btnGoUJoin=(Button)findViewById(R.id.goUJoin);
+        btnGoMapView=(Button)findViewById(R.id.goMap);
 
         //
 
@@ -54,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), NUJoinActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnGoMapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), NMapViewActivity.class);
                 startActivity(intent);
             }
         });

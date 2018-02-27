@@ -2,16 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dazze.navigationforblind">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-feature android:name="andrdoi.hardware.telephony"
-        android:required="true"/>
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="22" />
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <meta-data android:name="com.kakao.sdk.AppKey"
+        android:value="63cfe0149022d302d1f2ce09919b176c"/>
+
+    <uses-feature
+        android:name="andrdoi.hardware.telephony"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -30,8 +42,8 @@
         <activity android:name=".NPJoinActivity" />
         <activity android:name=".NPLoginActivity" />
         <activity android:name=".NUJoinActivity" />
-
-        <activity android:name=".NConnectActivity"></activity>
+        <activity android:name=".NConnectActivity" />
+        <activity android:name=".NMapViewActivity"></activity>
     </application>
 
 </manifest>
