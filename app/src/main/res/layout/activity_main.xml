@@ -32,4 +32,10 @@
         android:layout_height="wrap_content"
         android:text="맵 보이기" />
 
+    <Button
+        android:id="@+id/goMake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="경로 설정" />
+
 </LinearLayout>
