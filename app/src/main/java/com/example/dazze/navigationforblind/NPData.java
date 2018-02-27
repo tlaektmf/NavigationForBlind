@@ -4,11 +4,7 @@ package com.example.dazze.navigationforblind;
  * Created by daseul on 2018-02-28.
  */
 
-public class NData {
+//보호자 고유의 정보
 
-    public String tmpString="임시~";
-
-    NData(){
-
-    }
+public class NPData {
 }

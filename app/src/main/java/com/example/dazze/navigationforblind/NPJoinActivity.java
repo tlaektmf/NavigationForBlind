@@ -97,6 +97,7 @@ public class NPJoinActivity extends AppCompatActivity {
                             NUserInfo minfo=new NUserInfo();
                             minfo.m_userEmail=mAuth.getCurrentUser().getEmail().toString();
                             minfo.m_pphonNum=editPphone.getText().toString();
+                            minfo.m_uid=mAuth.getUid().toString();
 
                             //랜덤으로 초대번호 생성
                             String tmp="";

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,7 +50,7 @@ public class NUJoinActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference databaseRef;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class NUJoinActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         databaseRef = database.getReference("userInfo");
+        mAuth = FirebaseAuth.getInstance();
 
         btnInsertCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +166,7 @@ public class NUJoinActivity extends AppCompatActivity {
             1. 노드 생성
             2. userInfo부분에 사용자의 핸드폰번호 추가
              */
+
             //데이터 등록
             databaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -177,11 +180,17 @@ public class NUJoinActivity extends AppCompatActivity {
 
                     //test 용
                     NUserInfo minfo=new NUserInfo();
-                    minfo = dataSnapshot.child("010").getValue(NUserInfo.class);
+                    minfo = dataSnapshot.child("0").getValue(NUserInfo.class);
                     minfo.m_uphoneNum="(사용자번호)";//수정필요
-                    database.getReference().child("userInfo").child("010").setValue(minfo);
+                    database.getReference().child("userInfo").child("0").setValue(minfo);
 
-
+                    //노드 생성(firebase에 데이터를 등록)
+                    String tmpUID=minfo.m_uid;
+                    String tmpPhone1=minfo.m_pphonNum;//보호자 번호
+                    String tmpPhone2="(사용자번호)";//수정필요
+                    NData data=new NData();
+                    database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 2개 생성 & data초기화(추후진행)
+                    database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);
 
 
                 }
@@ -191,14 +200,6 @@ public class NUJoinActivity extends AppCompatActivity {
                     Log.w("TAG: ", "Failed to read value", databaseError.toException());
                 }
             });
-
-            //노드 생성
-            // firebase에 데이터를 등록
-           // NUserInfo minfo=new NUserInfo();
-           // minfo.m_userEmail=mAuth.getCurrentUser().getEmail().toString();
-           // minfo.m_pphonNum=editPphone.getText().toString();
-
-
 
         }
         else{
