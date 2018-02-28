@@ -20,6 +20,11 @@ public class NMapViewActivity extends AppCompatActivity {
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
+        /*
+        1. 보호자가 사용자에게 넘긴 경로의 번호 & 개수를 받는다
+        2. 점의 좌표 (위도, 경도) 를 받아
+        3. 점을 찍어주고 이어준다
+         */
 
 
 

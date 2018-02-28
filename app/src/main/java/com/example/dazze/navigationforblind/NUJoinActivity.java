@@ -189,8 +189,9 @@ public class NUJoinActivity extends AppCompatActivity {
                     String tmpPhone1=minfo.m_pphonNum;//보호자 번호
                     String tmpPhone2="(사용자번호)";//수정필요
                     NData data=new NData();
-                    database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 2개 생성 & data초기화(추후진행)
+                    database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 3개 생성 & data초기화(추후진행)
                     database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);
+                    database.getReference().child("userData").child(tmpUID).child("공유데이터").setValue(data);
 
 
                 }
