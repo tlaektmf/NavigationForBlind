@@ -124,20 +124,20 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
                     mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.546215,127.074337));
 
                     NWayInfoData way=new NWayInfoData();
-                    way.idNum=1;//첫번째 경로 정보 입니다.
-                    way.mXYList.add(new NXY(37.543682+"",127.077555+""));
-                    way.mXYList.add(new NXY(37.543736+"",127.076801+""));
-                    way.mXYList.add(new NXY(37.545369+"",127.076477+""));
+                    way.m_idNum=1;//첫번째 경로 정보 입니다.
+                    way.m_XYList.add(new NXY(37.543682+"",127.077555+""));
+                    way.m_XYList.add(new NXY(37.543736+"",127.076801+""));
+                    way.m_XYList.add(new NXY(37.545369+"",127.076477+""));
 
                     NWayInfoData way2=new NWayInfoData();
-                    way2.idNum=2;//두번째 경로 정보 입니다.
-                    way2.mXYList.add(new NXY(37.545035+"",127.075318+""));
-                    way2.mXYList.add(new NXY(37.545422+"",127.074127+""));
-                    way2.mXYList.add(new NXY(37.546215+"",127.074337+""));
+                    way2.m_idNum=2;//두번째 경로 정보 입니다.
+                    way2.m_XYList.add(new NXY(37.545035+"",127.075318+""));
+                    way2.m_XYList.add(new NXY(37.545422+"",127.074127+""));
+                    way2.m_XYList.add(new NXY(37.546215+"",127.074337+""));
 
                     NData data=new NData();
-                    data.mway.add(way);
-                    data.mway.add(way2);
+                    data.m_way.add(way);
+                    data.m_way.add(way2);
 
                     //이 값들을 firebase에 저장
                     database = FirebaseDatabase.getInstance();
@@ -146,6 +146,7 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
                     String userUID=mAuth.getCurrentUser().getUid().toString();
                     database.getReference().child("userData").child(userUID).child("공유데이터").setValue(data);
 
+                   // Log.i("다슬로그",data.m_way.get(0).m_XYList.get(0).m_latitude);
 
                 }
             });

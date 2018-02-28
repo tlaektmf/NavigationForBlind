@@ -5,14 +5,14 @@ package com.example.dazze.navigationforblind;
  */
 
 public class NXY {
-    public String mlatitude;//위도값
-    public String mlongitude;//경도값
+    public String m_latitude;//위도값
+    public String m_longitude;//경도값
 
     NXY(){
 
     }
     NXY(String latitude,String longitude){
-        mlatitude= latitude;
-        mlongitude=longitude;
+        m_latitude= latitude;
+        m_longitude=longitude;
     }
 }

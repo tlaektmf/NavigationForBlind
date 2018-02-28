@@ -13,10 +13,10 @@ public class NData {
 
    // public String tmpString="보호자,사용자 공유데이터";
 
-    public List<NWayInfoData> mway;
+    public List<NWayInfoData> m_way;
 
     NData(){
-        mway=new ArrayList();
+        m_way=new ArrayList();
 
     }
 }

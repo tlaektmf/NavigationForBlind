@@ -11,12 +11,12 @@ import java.util.List;
 
 public class NWayInfoData {
 
-    public int idNum;//경로번호
-    List<NXY> mXYList;//좌표의 List
+    public int m_idNum;//경로번호
+    List<NXY> m_XYList;//좌표의 List
 
     NWayInfoData(){
 
-        mXYList=new ArrayList();
+        m_XYList=new ArrayList();
     }
 
 }
