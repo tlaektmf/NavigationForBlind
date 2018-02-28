@@ -1,6 +1,7 @@
 package com.example.dazze.navigationforblind;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -43,7 +45,7 @@ public class NUJoinActivity extends AppCompatActivity {
     EditText edtInsertCode;
     Button btnInsertCode;
 
-//    ListView listView;
+    //    ListView listView;
 //    List idList = new ArrayList<>();
 //    ArrayAdapter adapter;
     static boolean calledAlready = false;
@@ -51,11 +53,12 @@ public class NUJoinActivity extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference databaseRef;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nujoin);
-        if(!calledAlready){
+        if (!calledAlready) {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
@@ -88,24 +91,24 @@ public class NUJoinActivity extends AppCompatActivity {
         }
     }
 
-    public void checkSmsPermission(){
-        int permissonCheck= ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS);
+    public void checkSmsPermission() {
+        int permissonCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS);
 
-        if(permissonCheck == PackageManager.PERMISSION_GRANTED){
+        if (permissonCheck == PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getApplicationContext(), "SMS 수신권한 있음", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), "SMS 수신권한 없음", Toast.LENGTH_SHORT).show();
 
             //권한설정 dialog에서 거부를 누르면
             //ActivityCompat.shouldShowRequestPermissionRationale 메소드의 반환값이 true가 된다.
             //단, 사용자가 "Don't ask again"을 체크한 경우
             //거부하더라도 false를 반환하여, 직접 사용자가 권한을 부여하지 않는 이상, 권한을 요청할 수 없게 된다.
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_SMS)){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_SMS)) {
                 //이곳에 권한이 왜 필요한지 설명하는 Toast나 dialog를 띄워준 후, 다시 권한을 요청한다.
                 Toast.makeText(getApplicationContext(), "SMS권한이 필요합니다", Toast.LENGTH_SHORT).show();
-                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
-            }else{
-                ActivityCompat.requestPermissions(this, new String[]{ android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_SMS}, SMS_RECEIVE_PERMISSION);
             }
         }
     }
@@ -129,36 +132,34 @@ public class NUJoinActivity extends AppCompatActivity {
 
         int compare = currentDate.compareTo(smsDate);
 
-        if(compare == 0)
+        if (compare == 0)
             return true; // 날짜가 같다면 true
         else
             return false;
     }
 
-    public boolean readSmsCode(String smsBody){    // 인증번호를 찾으면 return true
+    public boolean readSmsCode(String smsBody) {    // 인증번호를 찾으면 return true
         int pt_start = -1;
         int pt_end = -1;
         String code_start = "[";
         String code_end = "]";
 
         pt_start = smsBody.indexOf(code_start);
-        if(pt_start != -1){
+        if (pt_start != -1) {
             pt_end = smsBody.indexOf(code_end);
-            if(pt_end != -1){
+            if (pt_end != -1) {
                 authCodeR = smsBody.substring(pt_start + code_start.length(), pt_end);
                 return true;
-            }
-            else{
+            } else {
                 return false;
             }
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public void checkSmsCode(){
-        if(authCodeR.equals(authCodeP)){
+    public void checkSmsCode() {
+        if (authCodeR.equals(authCodeP)) {
             Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
             /*
@@ -179,15 +180,28 @@ public class NUJoinActivity extends AppCompatActivity {
 //                    database.getReference().child("userInfo").child(senderAdd).setValue(minfo);
 
                     //test 용
-                    NUserInfo minfo=new NUserInfo();
+                    NUserInfo minfo = new NUserInfo();
                     minfo = dataSnapshot.child("0").getValue(NUserInfo.class);
-                    minfo.m_uphoneNum="(사용자번호)";//수정필요
+
+                    if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                        minfo.m_uphoneNum = mgr.getLine1Number();
+                        return;
+                    }
+
                     database.getReference().child("userInfo").child("0").setValue(minfo);
 
                     //노드 생성(firebase에 데이터를 등록)
                     String tmpUID=minfo.m_uid;
                     String tmpPhone1=minfo.m_pphonNum;//보호자 번호
-                    String tmpPhone2="(사용자번호)";//수정필요
+                    String tmpPhone2=minfo.m_uphoneNum;
                     NData data=new NData();
                     database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 2개 생성 & data초기화(추후진행)
                     database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);
