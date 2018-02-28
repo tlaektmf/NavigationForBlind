@@ -125,12 +125,14 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
 
                     NWayInfoData way=new NWayInfoData();
                     way.m_idNum=1;//첫번째 경로 정보 입니다.
+                    way.m_status=0;//경로의 상태값 설정(default)
                     way.m_XYList.add(new NXY(37.543682+"",127.077555+""));
                     way.m_XYList.add(new NXY(37.543736+"",127.076801+""));
                     way.m_XYList.add(new NXY(37.545369+"",127.076477+""));
 
                     NWayInfoData way2=new NWayInfoData();
                     way2.m_idNum=2;//두번째 경로 정보 입니다.
+                    way2.m_status=0;//경로의 상태값 설정(default)
                     way2.m_XYList.add(new NXY(37.545035+"",127.075318+""));
                     way2.m_XYList.add(new NXY(37.545422+"",127.074127+""));
                     way2.m_XYList.add(new NXY(37.546215+"",127.074337+""));
