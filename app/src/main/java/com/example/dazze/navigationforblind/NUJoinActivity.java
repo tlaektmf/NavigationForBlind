@@ -189,8 +189,7 @@ public class NUJoinActivity extends AppCompatActivity {
                     }
 
                     TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                    //minfo.m_uphoneNum = mgr.getLine1Number();
-                    minfo.m_uphoneNum = "1234";
+                    minfo.m_uphoneNum = mgr.getLine1Number();
                     database.getReference().child("userInfo").child("0").setValue(minfo);
 
                     //노드 생성(firebase에 데이터를 등록)
