@@ -38,4 +38,10 @@
         android:layout_height="wrap_content"
         android:text="경로 설정" />
 
+    <Button
+        android:id="@+id/showWay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="경로 보기" />
+
 </LinearLayout>

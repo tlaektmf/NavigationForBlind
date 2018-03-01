@@ -3,10 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
-        android:id="@+id/map"
+        android:id="@+id/map_make"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <Button
+        android:id="@+id/sendWay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="사용자에게 경로 전송하기" />
+
 </RelativeLayout>
+
