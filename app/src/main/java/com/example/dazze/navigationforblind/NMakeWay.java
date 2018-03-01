@@ -1,6 +1,8 @@
 package com.example.dazze.navigationforblind;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +12,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
@@ -22,6 +27,7 @@ import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventListener,MapView.OpenAPIKeyAuthenticationResultListener, MapView.CurrentLocationEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener,MapView.POIItemEventListener {
 
@@ -37,10 +43,13 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
     double now_latitude;
     double now_longitude;
 
+    private List<NXY> tmpList;//위도,경도 좌표를 가지고 있는 리스트
+
     //firebase
-    FirebaseDatabase database;
-    DatabaseReference databaseRef;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseRef;
     private FirebaseAuth mAuth;
+    public int count;//보호자가 등록한 경로의 총 개수
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -81,13 +90,9 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
 
         btnSendWay=(Button)findViewById(R.id.sendWay);
 
-        polyline= new MapPolyline();
-        polyline.setTag(1000);
-        polyline.setLineColor(Color.argb(128, 255, 51, 0)); // Polyline 컬러 지정.
-
         mMapPointList=new ArrayList();
+        tmpList=new ArrayList();
 
-        //보호자가 '경로전송버튼'을 누르기 전까지 진행
 //        while (flag){
 //            btnSendWay.setOnClickListener(new View.OnClickListener() {//경로전송버튼을 누를경우
 //                @Override
@@ -112,40 +117,65 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
                 - 모든 상태값 변경
                  */
 
-                //일단 임시로 좌표값 설정
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.543682, 127.077555));
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.543736, 127.076801));
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545369,127.076477));
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545035,127.075318));
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545422,127.074127));
-                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.546215,127.074337));
+                /*
+                일단 임시로 좌표값 설정
+                 */
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.543682, 127.077555));
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.543736, 127.076801));
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545369,127.076477));
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545035,127.075318));
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.545422,127.074127));
+//                    mMapPointList.add(MapPoint.mapPointWithGeoCoord(37.546215,127.074337));
+//
+//                    NWayInfoData way=new NWayInfoData();
+//                    way.m_idNum=1;//첫번째 경로 정보 입니다.
+//                    way.m_status=0;//경로의 상태값 설정(default)
+//                    way.m_XYList.add(new NXY(37.543682+"",127.077555+""));
+//                    way.m_XYList.add(new NXY(37.543736+"",127.076801+""));
+//                    way.m_XYList.add(new NXY(37.545369+"",127.076477+""));
+//
+//                    NWayInfoData way2=new NWayInfoData();
+//                    way2.m_idNum=2;//두번째 경로 정보 입니다.
+//                    way2.m_status=0;//경로의 상태값 설정(default)
+//                    way2.m_XYList.add(new NXY(37.545035+"",127.075318+""));
+//                    way2.m_XYList.add(new NXY(37.545422+"",127.074127+""));
+//                    way2.m_XYList.add(new NXY(37.546215+"",127.074337+""));
 
                     NWayInfoData way=new NWayInfoData();
                     way.m_idNum=1;//첫번째 경로 정보 입니다.
                     way.m_status=0;//경로의 상태값 설정(default)
-                    way.m_XYList.add(new NXY(37.543682+"",127.077555+""));
-                    way.m_XYList.add(new NXY(37.543736+"",127.076801+""));
-                    way.m_XYList.add(new NXY(37.545369+"",127.076477+""));
-
-                    NWayInfoData way2=new NWayInfoData();
-                    way2.m_idNum=2;//두번째 경로 정보 입니다.
-                    way2.m_status=0;//경로의 상태값 설정(default)
-                    way2.m_XYList.add(new NXY(37.545035+"",127.075318+""));
-                    way2.m_XYList.add(new NXY(37.545422+"",127.074127+""));
-                    way2.m_XYList.add(new NXY(37.546215+"",127.074337+""));
+                    for(int i=0;i<tmpList.size();i++){
+                        way.m_XYList.add(new NXY(tmpList.get(i).m_latitude,tmpList.get(i).m_longitude));
+                    }
 
                     NData data=new NData();
                     data.m_way.add(way);
-                    data.m_way.add(way2);
 
                     //이 값들을 firebase에 저장
                     database = FirebaseDatabase.getInstance();
-                    //databaseRef = database.getReference("userInfo");
+                    databaseRef = database.getReference("userData");
                     mAuth = FirebaseAuth.getInstance();
-                    String userUID=mAuth.getCurrentUser().getUid().toString();
-                    database.getReference().child("userData").child(userUID).child("공유데이터").setValue(data);
 
-                   // Log.i("다슬로그",data.m_way.get(0).m_XYList.get(0).m_latitude);
+                    String userUID=mAuth.getCurrentUser().getUid().toString();
+
+                    databaseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            NData tmpdata=new NData();
+                            tmpdata = dataSnapshot.child("userData").child(mAuth.getCurrentUser().getUid().toString()).child("공유데이터").getValue(NData.class);
+                            //count=tmpdata.getSize();//보호자가 등록하 경로의 총 개수 반환
+                            Log.i("다슬로그",tmpdata.m_way.get(0).m_idNum+"");
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.w("TAG: ", "Failed to read value", databaseError.toException());
+                        }
+                    });
+
+                   //등록
+                    database.getReference().child("userData").child(userUID).child("공유데이터").setValue(data);
 
                 }
             });
@@ -218,6 +248,25 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
     @Override
     public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
         //사용자가 지도 위 한 지점을 길게 누른 경우(long press) 호출된다.
+
+        final MapPoint.GeoCoordinate mapPointGeo = mapPoint.getMapPointGeoCoord();
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("좌표 추가");
+        alertDialog.setMessage(String.format("Long-Press on (%f,%f) 추가하시겠습니까?", mapPointGeo.latitude, mapPointGeo.longitude));
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //등록버튼 누를 경우
+                //보호자가 '경로전송버튼'을 누르기 전까지 점의 좌표 추가 진행(mMapPointList)
+                mMapPointList.add(MapPoint.mapPointWithGeoCoord(mapPointGeo.latitude, mapPointGeo.longitude));
+                tmpList.add(new NXY(mapPointGeo.latitude+"",mapPointGeo.longitude+""));
+            }
+        });
+
+        alertDialog.setNegativeButton("CANCLE", null);
+        alertDialog.show();
+
     }
 
     @Override

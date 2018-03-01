@@ -19,4 +19,8 @@ public class NData {
         m_way=new ArrayList();
 
     }
+
+    int getSize(){
+        return m_way.size();
+    }
 }

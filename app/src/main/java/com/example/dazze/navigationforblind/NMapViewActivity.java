@@ -26,8 +26,8 @@ import java.util.ArrayList;
 public class NMapViewActivity extends AppCompatActivity  implements MapView.OpenAPIKeyAuthenticationResultListener, MapView.MapViewEventListener {
 
 
-    FirebaseDatabase database;
-    DatabaseReference databaseRef;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseRef;
     private FirebaseAuth mAuth;
     private ArrayList mMapPointList;//보호자가 찍은 점들을 리스트로 관리
 
@@ -66,6 +66,13 @@ public class NMapViewActivity extends AppCompatActivity  implements MapView.Open
                     mMapPointList.add(MapPoint.mapPointWithGeoCoord(Double.parseDouble(data.m_XYList.get(i).m_latitude), Double.parseDouble(data.m_XYList.get(i).m_longitude)));
                 }
 
+
+                //기존에 polyline이 있는지의 여부 판단->없을 경우 재생성
+                MapPolyline existingPolyline = mapView.findPolylineByTag(2000);
+                if (existingPolyline != null) {//기존에 있을 경우
+                    mapView.removePolyline(existingPolyline);
+                    Log.i("다슬로그","기존에 이미 POLYLINE있음");
+                }
 
                 //polyline 만듦
                 MapPolyline polyline = new MapPolyline(mMapPointList.size());

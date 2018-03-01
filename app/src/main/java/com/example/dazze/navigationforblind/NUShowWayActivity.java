@@ -28,8 +28,9 @@ public class NUShowWayActivity extends AppCompatActivity {
         btnShow1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getBaseContext(),NPJoinActivity.class);
+                Intent intent=new Intent(getBaseContext(),NMapViewActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -37,8 +38,9 @@ public class NUShowWayActivity extends AppCompatActivity {
         btnShow2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getBaseContext(),NPJoinActivity.class);
+                Intent intent=new Intent(getBaseContext(),NMapViewActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
