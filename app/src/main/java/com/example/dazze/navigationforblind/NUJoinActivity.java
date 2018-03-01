@@ -184,17 +184,12 @@ public class NUJoinActivity extends AppCompatActivity {
                     minfo = dataSnapshot.child("0").getValue(NUserInfo.class);
 
                     if (ActivityCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                        minfo.m_uphoneNum = mgr.getLine1Number();
+                        Log.w("TAG: ", "Failed to check Permission");
                         return;
                     }
+
+                    TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    minfo.m_uphoneNum = mgr.getLine1Number();
 
                     database.getReference().child("userInfo").child("0").setValue(minfo);
 
