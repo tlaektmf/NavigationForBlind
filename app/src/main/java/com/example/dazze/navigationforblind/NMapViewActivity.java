@@ -14,8 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapPointBounds;
 import net.daum.mf.map.api.MapPolyline;
 import net.daum.mf.map.api.MapView;
 
@@ -66,14 +68,22 @@ public class NMapViewActivity extends AppCompatActivity  implements MapView.Open
 
 
                 //polyline 만듦
-                Log.i("다슬로그",mMapPointList.get(0).toString());
                 MapPolyline polyline = new MapPolyline(mMapPointList.size());
+                //polyline 기본설정
                 polyline.setTag(2000);
-                polyline.setLineColor(Color.argb(128, 255, 93, 117));
+                polyline.setLineColor(Color.argb(128, 255, 51, 0)); // Polyline 컬러 지정.
+
                 for(int i=0;i<mMapPointList.size();i++){
                         polyline.addPoint((MapPoint) mMapPointList.get(i));
                 }
-                mapView.addPolyline(polyline);
+
+                mapView.addPolyline(polyline);//mapview에 polyline 추가
+
+                // 지도뷰의 중심좌표와 줌레벨을 Polyline이 모두 나오도록 조정.
+                MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
+                int padding = 100; // px
+                mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+
             }
 
             @Override
@@ -82,7 +92,7 @@ public class NMapViewActivity extends AppCompatActivity  implements MapView.Open
             }
         });
 
-        mapViewContainer.addView(mapView);
+        mapViewContainer.addView(mapView);//맵뷰에 화면을 띄운다
 
     }
 

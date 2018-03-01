@@ -51,7 +51,7 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
         MapView mapView = new MapView(this);
         mapView.setDaumMapApiKey("63cfe0149022d302d1f2ce09919b176c");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_make);
-        mapViewContainer.addView(mapView);
+        //mapViewContainer.addView(mapView);
 
         /*
         기본 설정 setting
@@ -67,6 +67,8 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
         mapView.zoomIn(true);
         // 4. 줌 아웃
         mapView.zoomOut(true);
+
+        mapViewContainer.addView(mapView);
 
         //5. 마커 설정(추후 마무리)
 //        MapPOIItem marker = new MapPOIItem();
@@ -85,11 +87,6 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
 
         mMapPointList=new ArrayList();
 
-        // 지도뷰의 중심좌표와 줌레벨을 Polyline이 모두 나오도록 조정.
-        MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
-        int padding = 100; // px
-        mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
-
         //보호자가 '경로전송버튼'을 누르기 전까지 진행
 //        while (flag){
 //            btnSendWay.setOnClickListener(new View.OnClickListener() {//경로전송버튼을 누를경우
@@ -105,7 +102,7 @@ public class NMakeWay extends AppCompatActivity implements MapView.MapViewEventL
 //            });
 //        }
 
-        //데이터 test
+        //경로 데이터 firebase에 등록
         btnSendWay.setOnClickListener(new View.OnClickListener() {//경로전송버튼을 누를경우
                 @Override
                 public void onClick(View v) {

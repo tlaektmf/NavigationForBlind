@@ -47,7 +47,6 @@
         <activity android:name=".NMakeWay" />
         <activity android:name=".NUShowWayActivity" />
         <activity android:name=".NUShowMapAcivity" />
-        <activity android:name=".NMakeWayActivity"></activity>
     </application>
 
 </manifest>
