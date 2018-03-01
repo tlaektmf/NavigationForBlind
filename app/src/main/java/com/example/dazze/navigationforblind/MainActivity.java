@@ -25,14 +25,16 @@ public class MainActivity extends AppCompatActivity {
         1. 보호자 회원가입
         2. 보호자 로그인
         3. 사용자 회원가입
-        4. mapview 보이기
-        5. 보호자 - 경로 설정
-        6. 사용자 - 경로 선택(경로 보기)
+        4. 사용자 로그인
+        5. mapview 보이기
+        6. 보호자 - 경로 설정
+        7. 사용자 - 경로 선택(경로 보기)
          */
 
         btnGoPJoin=(Button)findViewById(R.id.goPJoin);
         btnGoPLogin=(Button)findViewById(R.id.goPLogin);
         btnGoUJoin=(Button)findViewById(R.id.goUJoin);
+        btnGoULogin=(Button)findViewById(R.id.goULogin);
         btnGoMapView=(Button)findViewById(R.id.goMap);
         btnGoMake=(Button)findViewById(R.id.goMake);
         btnShowWay=(Button)findViewById(R.id.showWay);
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(getBaseContext(),NPJoinActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        btnGoULogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), NULoginActivity.class);
+                startActivity(intent);
             }
         });
 

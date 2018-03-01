@@ -172,14 +172,6 @@ public class NUJoinActivity extends AppCompatActivity {
             databaseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    //원래 코드! (밑에는 test용)
-//                    NUserInfo minfo=new NUserInfo();
-//                    minfo = dataSnapshot.child(senderAdd).getValue(NUserInfo.class);
-//                    minfo.m_uphoneNum="(사용자번호)";//수정필요
-//                    database.getReference().child("userInfo").child(senderAdd).setValue(minfo);
-
-                    //test 용
                     NUserInfo minfo = new NUserInfo();
                     minfo = dataSnapshot.child("0").getValue(NUserInfo.class);
 
