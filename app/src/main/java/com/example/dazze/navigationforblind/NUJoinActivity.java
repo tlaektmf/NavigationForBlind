@@ -2,9 +2,11 @@ package com.example.dazze.navigationforblind;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,12 +29,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 
 public class NUJoinActivity extends AppCompatActivity {
 
@@ -160,7 +172,6 @@ public class NUJoinActivity extends AppCompatActivity {
 
     public void checkSmsCode() {
         if (authCodeR.equals(authCodeP)) {
-            Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
             /*
             인증 완료시
@@ -190,10 +201,10 @@ public class NUJoinActivity extends AppCompatActivity {
                     String tmpPhone2=minfo.m_uphoneNum;
                     NData data=new NData();
                     database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 3개 생성 & data초기화(추후진행)
-                    database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);
+//                    database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);// Test로 주석
                     database.getReference().child("userData").child(tmpUID).child("공유데이터").setValue(data);
 
-
+                    Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -249,4 +260,5 @@ public class NUJoinActivity extends AppCompatActivity {
         }
         cursor.close();
     }
+
 }

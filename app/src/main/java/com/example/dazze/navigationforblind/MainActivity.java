@@ -63,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         btnGoULogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), NULoginActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getBaseContext(), NULoginActivity.class);
+//                startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), NFingerprintActivity.class);
+                    startActivity(intent);
             }
         });
 

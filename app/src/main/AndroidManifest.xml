@@ -22,6 +22,7 @@
         android:name="andrdoi.hardware.telephony"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -46,7 +47,8 @@
         <activity android:name=".NMapViewActivity" />
         <activity android:name=".NMakeWay" />
         <activity android:name=".NUShowWayActivity" />
-        <activity android:name=".NULoginActivity"></activity>
+        <activity android:name=".NULoginActivity" />
+        <activity android:name=".NFingerprintActivity"></activity>
     </application>
 
 </manifest>
