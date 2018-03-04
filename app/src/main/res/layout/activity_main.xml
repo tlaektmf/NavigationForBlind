@@ -50,4 +50,10 @@
         android:layout_height="wrap_content"
         android:text="경로 보기" />
 
+    <Button
+        android:id="@+id/goUIntroMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사용자 시작화면" />
+
 </LinearLayout>

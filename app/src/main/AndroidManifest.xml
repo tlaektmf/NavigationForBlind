@@ -46,7 +46,10 @@
         <activity android:name=".NMapViewActivity" />
         <activity android:name=".NMakeWay" />
         <activity android:name=".NUShowWayActivity" />
-        <activity android:name=".NULoginActivity"></activity>
+        <activity android:name=".NULoginActivity" />
+        <activity android:name=".NUIntroMenuActivity" />
+        <activity android:name=".NUSelectWayActivity" />
+        <activity android:name=".NUFavoritesWayActivity"></activity>
     </application>
 
 </manifest>

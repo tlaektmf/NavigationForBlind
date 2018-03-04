@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnGoMapView;//맵뷰 보이기
     private Button btnGoMake;//경로 생성하기
     private Button btnShowWay;//넘겨받은 경로 보이기
+    private Button btnGoUIntroMenu;//사용자 메뉴화면
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         5. mapview 보이기
         6. 보호자 - 경로 설정
         7. 사용자 - 경로 선택(경로 보기)
+        6. 사용자 - 메뉴 화면
          */
 
         btnGoPJoin=(Button)findViewById(R.id.goPJoin);
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnGoMapView=(Button)findViewById(R.id.goMap);
         btnGoMake=(Button)findViewById(R.id.goMake);
         btnShowWay=(Button)findViewById(R.id.showWay);
+        btnGoUIntroMenu=(Button)findViewById(R.id.goUIntroMenu);
         //
 
         btnGoPLogin.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //넘겨받은 경로 목록 확인하기
                 Intent intent = new Intent(getBaseContext(), NUShowWayActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnGoUIntroMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), NUIntroMenuActivity.class);
                 startActivity(intent);
             }
         });
