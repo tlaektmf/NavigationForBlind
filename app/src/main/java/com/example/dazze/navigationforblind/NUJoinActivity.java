@@ -201,7 +201,7 @@ public class NUJoinActivity extends AppCompatActivity {
                     String tmpPhone2=minfo.m_uphoneNum;
                     NData data=new NData();
                     database.getReference().child("userData").child(tmpUID).child(tmpPhone1).setValue(data);//child 3개 생성 & data초기화(추후진행)
-//                    database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);// Test로 주석
+                    database.getReference().child("userData").child(tmpUID).child(tmpPhone2).setValue(data);// Test로 주석
                     database.getReference().child("userData").child(tmpUID).child("공유데이터").setValue(data);
 
                     Toast.makeText(getApplicationContext(), "인증 완료되었습니다.", Toast.LENGTH_SHORT).show();
