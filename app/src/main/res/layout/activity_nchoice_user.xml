@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NIntroActivity"
+    tools:context=".NChoiceUserActivity"
     android:background="#ffffff"
-    android:id="@+id/introFrameLayout">
+    android:id="@+id/choiceUserFrame">
 
     <ImageView
-        android:id="@+id/introImageView"
+        android:id="@+id/choiceUserImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:src="@drawable/user_choice" />
 
     <ImageView
         android:id="@+id/userChoiceText"
@@ -19,7 +20,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/user_choice_word"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="410dp"
-        android:visibility="invisible"/>
+        android:layout_marginTop="410dp"/>
 
 </FrameLayout>
